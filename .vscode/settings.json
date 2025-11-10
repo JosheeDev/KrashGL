@@ -47,6 +47,8 @@
     "explorer.compactFolders": false,
     "files.associations": {
         "stdio.h": "c",
-        "test.h": "c"
+        "test.h": "c",
+        "system_error": "cpp",
+        "logger.h": "c"
     }
 }
