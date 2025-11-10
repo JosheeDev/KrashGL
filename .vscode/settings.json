@@ -1,5 +1,4 @@
 {
-    "workbench.colorTheme": "Gruvbox Dark (Hard)",
     "xmlTools.enforcePrettySelfClosingTagOnFormat": true,
     "editor.minimap.enabled": false,
     "terminal.integrated.shell.windows": "c:/Program Files/PowerShell/7/pwsh.exe",
@@ -49,6 +48,7 @@
         "stdio.h": "c",
         "test.h": "c",
         "system_error": "cpp",
-        "logger.h": "c"
+        "logger.h": "c",
+        "platform.h": "c"
     }
 }
