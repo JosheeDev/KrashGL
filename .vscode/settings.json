@@ -7,7 +7,6 @@
     "editor.fontFamily": "Liberation Mono",
     "editor.fontSize": 16,
     "editor.fontWeight": "1",
-    "workbench.activityBar.visible": true,
     "workbench.statusBar.visible": true,
     "editor.lineNumbers": "on",
     "C_Cpp.clang_format_style": "{ BasedOnStyle: Google, IndentWidth: 4, ColumnLimit: 0, NamespaceIndentation: All}",
@@ -57,6 +56,7 @@
         "darray.h": "c",
         "xutility": "cpp",
         "event.h": "c",
-        "input.h": "c"
+        "input.h": "c",
+        "kstring.h": "c"
     }
 }

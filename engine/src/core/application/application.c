@@ -131,11 +131,11 @@ b8 application_on_event(u16 code, void* sender, void* listener_inst, event_conte
 
 b8 application_on_key(u16 code, void* sender, void* listener_inst, event_context context) {
     if (code == EVENT_CODE_KEY_PRESSED) {
-        // NOTE: Uncomment to show key pressed
+        // NOTE: Uncomment/Comment to show/hide key pressed
         // u16 key_code = context.data.u16[0];
         // KDEBUG("'%c' key pressed in window.", key_code);
     } else if (code == EVENT_CODE_KEY_RELEASED) {
-        // NOTE: Uncomment to show key released
+        // NOTE: Uncomment/Comment to show/hide key released
         // u16 key_code = context.data.u16[0];
         // KDEBUG("'%c' key released in window.", key_code);
     }
