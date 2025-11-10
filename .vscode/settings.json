@@ -49,6 +49,9 @@
         "test.h": "c",
         "system_error": "cpp",
         "logger.h": "c",
-        "platform.h": "c"
+        "platform.h": "c",
+        "game.h": "c",
+        "application.h": "c",
+        "game_entry.h": "c"
     }
 }
