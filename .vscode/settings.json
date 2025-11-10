@@ -52,6 +52,7 @@
         "platform.h": "c",
         "game.h": "c",
         "application.h": "c",
-        "game_entry.h": "c"
+        "game_entry.h": "c",
+        "kmemory.h": "c"
     }
 }
