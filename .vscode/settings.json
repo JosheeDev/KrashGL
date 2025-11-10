@@ -53,6 +53,9 @@
         "game.h": "c",
         "application.h": "c",
         "game_entry.h": "c",
-        "kmemory.h": "c"
+        "kmemory.h": "c",
+        "darray.h": "c",
+        "xutility": "cpp",
+        "event.h": "c"
     }
 }
