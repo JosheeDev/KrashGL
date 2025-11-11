@@ -64,6 +64,9 @@
         "vulkan_backend.h": "c",
         "vulkan_types.inl": "c",
         "vulkan.h": "c",
-        "vulkan_platform.h": "c"
+        "vulkan_platform.h": "c",
+        "defines.h": "c",
+        "vulkan_win32.h": "c",
+        "vulkan_device.h": "c"
     }
 }
