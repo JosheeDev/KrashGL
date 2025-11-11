@@ -70,6 +70,9 @@
         "vulkan_device.h": "c",
         "asserts.h": "c",
         "vulkan_swapchain.h": "c",
-        "vulkan_image.h": "c"
+        "vulkan_image.h": "c",
+        "vulkan_framebuffer.h": "c",
+        "vulkan_fence.h": "c",
+        "vulkan_renderpass.h": "c"
     }
 }
