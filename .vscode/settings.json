@@ -62,6 +62,8 @@
         "renderer_frontend.h": "c",
         "renderer_types.inl": "c",
         "vulkan_backend.h": "c",
-        "vulkan_types.inl": "c"
+        "vulkan_types.inl": "c",
+        "vulkan.h": "c",
+        "vulkan_platform.h": "c"
     }
 }
