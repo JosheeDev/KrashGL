@@ -74,6 +74,7 @@
         "vulkan_framebuffer.h": "c",
         "vulkan_fence.h": "c",
         "vulkan_renderpass.h": "c",
-        "vulkan_utils.h": "c"
+        "vulkan_utils.h": "c",
+        "kmath.h": "c"
     }
 }
