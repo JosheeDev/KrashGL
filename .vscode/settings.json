@@ -67,6 +67,9 @@
         "vulkan_platform.h": "c",
         "defines.h": "c",
         "vulkan_win32.h": "c",
-        "vulkan_device.h": "c"
+        "vulkan_device.h": "c",
+        "asserts.h": "c",
+        "vulkan_swapchain.h": "c",
+        "vulkan_image.h": "c"
     }
 }
