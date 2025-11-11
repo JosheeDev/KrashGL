@@ -57,6 +57,11 @@
         "xutility": "cpp",
         "event.h": "c",
         "input.h": "c",
-        "kstring.h": "c"
+        "kstring.h": "c",
+        "clock.h": "c",
+        "renderer_frontend.h": "c",
+        "renderer_types.inl": "c",
+        "vulkan_backend.h": "c",
+        "vulkan_types.inl": "c"
     }
 }
