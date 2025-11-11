@@ -4,6 +4,7 @@
 #include "renderer/vulkan/platform/vulkan_platform.h"
 #include "renderer/vulkan/device/vulkan_device.h"
 #include "renderer/vulkan/swapchain/vulkan_swapchain.h"
+#include "renderer/vulkan/renderpass/vulkan_renderpass.h"
 
 #include "core/logger/logger.h"
 #include "core/kstring/kstring.h"
@@ -146,12 +147,24 @@ b8 vulkan_renderer_backend_initialize(renderer_backend* backend, const char* app
         context.framebuffer_height,
         &context.swapchain);
 
+    // Renderpass
+    vulkan_renderpass_create(
+        &context,
+        &context.main_renderpass,
+        0, 0, context.framebuffer_width, context.framebuffer_height,
+        0.0f, 0.0f, 0.2f, 1.0f,
+        1.0f,
+        0);
+
     KINFO("Vulkan renderer initialized successfully.");
     return TRUE;
 }
 
 void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
     // Destroy in the opposite order of creation.
+
+    // Renderpass
+    vulkan_renderpass_destroy(&context, &context.main_renderpass);
 
     // Swapchain
     vulkan_swapchain_destroy(&context, &context.swapchain);
