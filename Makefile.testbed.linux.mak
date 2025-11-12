@@ -4,7 +4,7 @@ OBJ_DIR := obj
 ASSEMBLY := testbed
 EXTENSION := 
 COMPILER_FLAGS := -g -fdeclspec -fPIC
-INCLUDE_FLAGS := -Iengine/src -I$(VULKAN_SDK)\include
+INCLUDE_FLAGS := -Iengine/src -Itestbed\src 
 LINKER_FLAGS := ./bin/krash.so -Wl,-rpath,./bin
 DEFINES := -D_DEBUG -DKIMPORT
 
