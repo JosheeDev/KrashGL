@@ -5,7 +5,7 @@ ASSEMBLY := testbed
 EXTENSION := 
 COMPILER_FLAGS := -g -fdeclspec -fPIC
 INCLUDE_FLAGS := -Iengine/src -I$(VULKAN_SDK)\include
-LINKER_FLAGS := -L./$(BUILD_DIR)/ -lkrash -Wl,-rpath,.
+LINKER_FLAGS := ./bin/krash.so -Wl,-rpath,./bin
 DEFINES := -D_DEBUG -DKIMPORT
 
 # Make does not offer a recursive wildcard function, so here's one:

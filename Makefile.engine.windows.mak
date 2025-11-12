@@ -37,7 +37,7 @@ compile: #compile .c files
 .PHONY: clean
 clean: # clean build directory
 	if exist $(BUILD_DIR)\$(ASSEMBLY)$(EXTENSION) del $(BUILD_DIR)\$(ASSEMBLY)$(EXTENSION)
-	rmdir /s /q $(OBJ_DIR)\$(ASSEMBLY)
+	rmdir /s /q $(OBJ_DIR)\engine
 
 $(OBJ_DIR)/%.c.o: %.c # compile .c to .c.o object
 	@echo   $<...
