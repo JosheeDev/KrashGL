@@ -80,6 +80,8 @@
         "linear_allocator.h": "c",
         "linear_allocator_tests.h": "c",
         "expect.h": "c",
-        "renderer_backend.h": "c"
+        "renderer_backend.h": "c",
+        "vulkan_object_shader.h": "c",
+        "vulkan_shader_utils.h": "c"
     }
 }

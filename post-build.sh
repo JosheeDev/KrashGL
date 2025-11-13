@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Run from root directory!
 mkdir -p bin/assets
 mkdir -p bin/assets/shaders
@@ -24,4 +26,4 @@ echo "Copying assets..."
 echo cp -R "assets" "bin"
 cp -R "assets" "bin"
 
-echo "Done."v
+echo "Done."
