@@ -75,6 +75,11 @@
         "vulkan_fence.h": "c",
         "vulkan_renderpass.h": "c",
         "vulkan_utils.h": "c",
-        "kmath.h": "c"
+        "kmath.h": "c",
+        "xiosbase": "c",
+        "linear_allocator.h": "c",
+        "linear_allocator_tests.h": "c",
+        "expect.h": "c",
+        "renderer_backend.h": "c"
     }
 }

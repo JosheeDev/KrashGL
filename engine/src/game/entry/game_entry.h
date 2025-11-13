@@ -2,7 +2,6 @@
 
 #include "core/application/application.h"
 #include "core/logger/logger.h"
-#include "memory/kmemory.h"
 #include "game/types/game_types.h"
 
 // Externally-defined function to create a game.
@@ -12,8 +11,6 @@ extern b8 create_game(game* out_game);
  * The main entry point of the application.
  */
 int main(void) {
-
-    initialize_memory();
 
     // Request the game instance from the application.
     game game_inst;
@@ -39,8 +36,6 @@ int main(void) {
         KINFO("Application did not shutdown gracefully.");
         return 2;
     }
-
-    shutdown_memory();
 
     return 0;
 }

@@ -14,4 +14,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Tests
+make -f "Makefile.tests.linux.mak" clean
+if [ $? -ne 0 ]; then
+    echo "Error: $?"
+    exit 1
+fi
+
 echo "All assemblies cleaned successfully."

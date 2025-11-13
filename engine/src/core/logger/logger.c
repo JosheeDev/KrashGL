@@ -7,13 +7,28 @@
 #include <string.h>
 #include <stdarg.h>
 
-b8 initialize_logging() {
+typedef struct logger_system_state {
+    b8 initialized;
+} logger_system_state;
+
+static logger_system_state* state_ptr;
+
+b8 initialize_logging(u64* memory_requirement, void* state) {
+    *memory_requirement = sizeof(logger_system_state);
+    if (state == 0) {
+        return true;
+    }
+
+    state_ptr = state;
+    state_ptr->initialized = true;
+    
     // TODO: create log file.
-    return TRUE;
+    return true;
 }
 
-void shutdown_logging() {
+void shutdown_logging(void* state) {
     // TODO: cleanup logging/write queued entries.
+    state_ptr = 0;
 }
 
 void log_output(log_level level, const char* message, ...) {
@@ -44,6 +59,10 @@ void log_output(log_level level, const char* message, ...) {
     } else {
         platform_console_write(out_message2, level);
     }
+
+    // Revert console color to default (ANSI escape code).
+    // This works on most POSIX terminals (Linux/macOS). On Windows, you'd need SetConsoleTextAttribute.
+    printf("\033[0m");
 }
 
 void report_assertion_failure(const char* expression, const char* message, const char* file, i32 line) {
