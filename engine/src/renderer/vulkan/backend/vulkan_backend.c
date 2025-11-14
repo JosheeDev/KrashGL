@@ -186,18 +186,24 @@ b8 vulkan_renderer_backend_initialize(renderer_backend* backend, const char* app
 
     // Create sync objects.
     context.image_available_semaphores = darray_reserve(VkSemaphore, context.swapchain.max_frames_in_flight);
-    context.queue_complete_semaphores = darray_reserve(VkSemaphore, context.swapchain.max_frames_in_flight);
+    context.queue_complete_semaphores = darray_reserve(VkSemaphore, context.swapchain.image_count);
     context.in_flight_fences = darray_reserve(vulkan_fence, context.swapchain.max_frames_in_flight);
 
+    // Image-available: per frame-in-flight
     for (u8 i = 0; i < context.swapchain.max_frames_in_flight; ++i) {
-        VkSemaphoreCreateInfo semaphore_create_info = {VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
-        vkCreateSemaphore(context.device.logical_device, &semaphore_create_info, context.allocator, &context.image_available_semaphores[i]);
-        vkCreateSemaphore(context.device.logical_device, &semaphore_create_info, context.allocator, &context.queue_complete_semaphores[i]);
+        VkSemaphoreCreateInfo ci = {VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
+        VK_CHECK(vkCreateSemaphore(context.device.logical_device, &ci, context.allocator, &context.image_available_semaphores[i]));
 
         // Create the fence in a signaled state, indicating that the first frame has already been "rendered".
         // This will prevent the application from waiting indefinitely for the first frame to render since it
         // cannot be rendered until a frame is "rendered" before it.
         vulkan_fence_create(&context, true, &context.in_flight_fences[i]);
+    }
+
+    // Queue-complete: per swapchain image
+    for (u32 i = 0; i < context.swapchain.image_count; ++i) {
+        VkSemaphoreCreateInfo ci = {VK_STRUCTURE_TYPE_SEMAPHORE_CREATE_INFO};
+        VK_CHECK(vkCreateSemaphore(context.device.logical_device, &ci, context.allocator, &context.queue_complete_semaphores[i]));
     }
 
     // In flight fences should not yet exist at this point, so clear the list. These are stored in pointers
@@ -232,6 +238,9 @@ void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
                 context.allocator);
             context.image_available_semaphores[i] = 0;
         }
+        vulkan_fence_destroy(&context, &context.in_flight_fences[i]);
+    }
+    for(u8 i = 0; i < context.swapchain.image_count; i++) {
         if (context.queue_complete_semaphores[i]) {
             vkDestroySemaphore(
                 context.device.logical_device,
@@ -239,9 +248,8 @@ void vulkan_renderer_backend_shutdown(renderer_backend* backend) {
                 context.allocator);
             context.queue_complete_semaphores[i] = 0;
         }
-        vulkan_fence_destroy(&context, &context.in_flight_fences[i]);
     }
-    darray_destroy(context.image_available_semaphores);
+        darray_destroy(context.image_available_semaphores);
     context.image_available_semaphores = 0;
 
     darray_destroy(context.queue_complete_semaphores);
@@ -407,7 +415,7 @@ b8 vulkan_renderer_backend_end_frame(renderer_backend* backend, f32 delta_time) 
     vulkan_command_buffer_end(command_buffer);
 
     // Make sure the previous frame is not using this image (i.e. its fence is being waited on)
-    if (context.images_in_flight[context.image_index] != VK_NULL_HANDLE) {  // was frame
+    if (context.images_in_flight[context.image_index] != VK_NULL_HANDLE) {
         vulkan_fence_wait(
             &context,
             context.images_in_flight[context.image_index],
@@ -421,7 +429,6 @@ b8 vulkan_renderer_backend_end_frame(renderer_backend* backend, f32 delta_time) 
     vulkan_fence_reset(&context, &context.in_flight_fences[context.current_frame]);
 
     // Submit the queue and wait for the operation to complete.
-    // Begin queue submission
     VkSubmitInfo submit_info = {VK_STRUCTURE_TYPE_SUBMIT_INFO};
 
     // Command buffer(s) to be executed.
@@ -429,16 +436,15 @@ b8 vulkan_renderer_backend_end_frame(renderer_backend* backend, f32 delta_time) 
     submit_info.pCommandBuffers = &command_buffer->handle;
 
     // The semaphore(s) to be signaled when the queue is complete.
+    // IMPORTANT: use image_index here, because each swapchain image has its own "render finished" semaphore.
     submit_info.signalSemaphoreCount = 1;
-    submit_info.pSignalSemaphores = &context.queue_complete_semaphores[context.current_frame];
+    submit_info.pSignalSemaphores = &context.queue_complete_semaphores[context.image_index]; // FIXED
 
     // Wait semaphore ensures that the operation cannot begin until the image is available.
+    // This is per-frame-in-flight, so current_frame is correct here.
     submit_info.waitSemaphoreCount = 1;
     submit_info.pWaitSemaphores = &context.image_available_semaphores[context.current_frame];
 
-    // Each semaphore waits on the corresponding pipeline stage to complete. 1:1 ratio.
-    // VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT prevents subsequent colour attachment
-    // writes from executing until the semaphore signals (i.e. one frame is presented at a time)
     VkPipelineStageFlags flags[1] = {VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT};
     submit_info.pWaitDstStageMask = flags;
 
@@ -453,17 +459,16 @@ b8 vulkan_renderer_backend_end_frame(renderer_backend* backend, f32 delta_time) 
     }
 
     vulkan_command_buffer_update_submitted(command_buffer);
-    // End queue submission
 
-    // Give the image back to the swapchain.
+    // Present the image.
+    // IMPORTANT: must wait on the same semaphore that was signaled above (image_index).
     vulkan_swapchain_present(
         &context,
         &context.swapchain,
         context.device.graphics_queue,
         context.device.present_queue,
-        context.queue_complete_semaphores[context.current_frame],
+        context.queue_complete_semaphores[context.image_index], // FIXED
         context.image_index);
-
 
     return true;
 }

@@ -57,7 +57,7 @@ void renderer_on_resized(u16 width, u16 height) {
     if (state_ptr) {
         state_ptr->backend.resized(&state_ptr->backend, width, height);
     } else {
-        KWARN("renderer backend does not exist to accept resize: %i %i", width, height);
+        // KWARN("renderer backend does not exist to accept resize: %i %i", width, height);
     }
 }
 
