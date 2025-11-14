@@ -82,6 +82,7 @@
         "expect.h": "c",
         "renderer_backend.h": "c",
         "vulkan_object_shader.h": "c",
-        "vulkan_shader_utils.h": "c"
+        "vulkan_shader_utils.h": "c",
+        "math_types.h": "c"
     }
 }
