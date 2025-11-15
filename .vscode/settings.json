@@ -84,6 +84,7 @@
         "vulkan_object_shader.h": "c",
         "vulkan_shader_utils.h": "c",
         "math_types.h": "c",
-        "vulkan_command_buffer.h": "c"
+        "vulkan_command_buffer.h": "c",
+        "resource_types.h": "c"
     }
 }
