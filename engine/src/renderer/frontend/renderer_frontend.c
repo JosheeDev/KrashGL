@@ -120,7 +120,7 @@ void renderer_on_resized(u16 width, u16 height) {
         state_ptr->projection = mat4_perspective(deg_to_rad(45.0f), width / (f32)height, state_ptr->near_clip, state_ptr->far_clip);
         state_ptr->backend.resized(&state_ptr->backend, width, height);
     } else {
-        KWARN("renderer backend does not exist to accept resize: %i %i", width, height);
+        // KWARN("renderer backend does not exist to accept resize: %i %i", width, height);
     }
 }
 
