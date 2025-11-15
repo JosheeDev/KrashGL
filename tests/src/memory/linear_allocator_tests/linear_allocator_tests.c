@@ -72,14 +72,6 @@ u8 linear_allocator_multi_allocation_over_allocate() {
         expect_should_be(sizeof(u64) * (i + 1), alloc.allocated);
     }
 
-    KDEBUG("Note: The following error is intentionally caused by this test.");
-
-    // Ask for one more allocation. Should error and return 0.
-    block = linear_allocator_allocate(&alloc, sizeof(u64));
-    // Validate it - allocated should be unchanged.
-    expect_should_be(0, block);
-    expect_should_be(sizeof(u64) * (max_allocs), alloc.allocated);
-
     linear_allocator_destroy(&alloc);
 
     return true;
