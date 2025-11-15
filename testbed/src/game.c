@@ -90,22 +90,12 @@ b8 game_update(game* game_inst, f32 delta_time) {
         vec3 backward = mat4_backward(state->view);
         velocity = vec3_add(velocity, backward);
     }
-
-    if (input_is_key_down('Q')) {
-        vec3 left = mat4_left(state->view);
-        velocity = vec3_add(velocity, left);
-    }
-
-    if (input_is_key_down('E')) {
-        vec3 right = mat4_right(state->view);
-        velocity = vec3_add(velocity, right);
-    }
-
+    
     if (input_is_key_down(KEY_SPACE)) {
         velocity.y += 1.0f;
     }
 
-    if (input_is_key_down('X')) {
+    if (input_is_key_down(KEY_LSHIFT)) {
         velocity.y -= 1.0f;
     }
 
