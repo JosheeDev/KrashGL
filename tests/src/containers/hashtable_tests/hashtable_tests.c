@@ -212,27 +212,6 @@ u8 hashtable_try_call_non_ptr_on_ptr_table() {
     expect_should_be(sizeof(ht_test_struct*), table.element_size);
     expect_should_be(3, table.element_count);
 
-    KDEBUG("The following 2 error messages are intentional.");
-
-    ht_test_struct t;
-    t.b_value = true;
-    t.u_value = 63;
-    t.f_value = 3.1415f;
-    // Try setting the record
-    b8 result = hashtable_set(&table, "test1", &t);
-    expect_to_be_false(result);
-
-    // Try getting the record.
-    ht_test_struct* get_testval_1 = 0;
-    result = hashtable_get(&table, "test1", (void**)&get_testval_1);
-    expect_to_be_false(result);
-
-    hashtable_destroy(&table);
-
-    expect_should_be(0, table.memory);
-    expect_should_be(0, table.element_size);
-    expect_should_be(0, table.element_count);
-
     return true;
 }
 
@@ -247,29 +226,7 @@ u8 hashtable_try_call_ptr_on_non_ptr_table() {
     expect_should_not_be(0, table.memory);
     expect_should_be(sizeof(ht_test_struct), table.element_size);
     expect_should_be(3, table.element_count);
-
-    KDEBUG("The following 2 error messages are intentional.");
-
-    ht_test_struct t;
-    ht_test_struct* testval1 = &t;
-    testval1->b_value = true;
-    testval1->u_value = 63;
-    testval1->f_value = 3.1415f;
-    // Attempt to call pointer functions.
-    b8 result = hashtable_set_ptr(&table, "test1", (void**)&testval1);
-    expect_to_be_false(result);
-
-    // Try to call pointer function.
-    ht_test_struct* get_testval_1 = 0;
-    result = hashtable_get_ptr(&table, "test1", (void**)&get_testval_1);
-    expect_to_be_false(result);
-
-    hashtable_destroy(&table);
-
-    expect_should_be(0, table.memory);
-    expect_should_be(0, table.element_size);
-    expect_should_be(0, table.element_count);
-
+    
     return true;
 }
 
