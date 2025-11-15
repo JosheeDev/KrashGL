@@ -247,7 +247,7 @@ b8 vulkan_renderer_backend_initialize(renderer_backend* backend, const char* app
     vertex_3d verts[vert_count];
     kzero_memory(verts, sizeof(vertex_3d) * vert_count);
 
-    const f32 f = 1.0f;
+    const f32 f = 10.0f;
 
     verts[0].position.x = -0.5 * f;
     verts[0].position.y = -0.5 * f;
