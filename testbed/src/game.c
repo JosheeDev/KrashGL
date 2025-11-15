@@ -55,53 +55,63 @@ b8 game_update(game* game_inst, f32 delta_time) {
     static u64 alloc_count = 0;
     u64 prev_alloc_count = alloc_count;
     alloc_count = get_memory_alloc_count();
+
+    // Debug: print allocation count when M is released.
     if (input_is_key_up('M') && input_was_key_down('M')) {
         KDEBUG("Allocations: %llu (%llu this frame)", alloc_count, alloc_count - prev_alloc_count);
     }
 
     game_state* state = (game_state*)game_inst->state;
 
-    // HACK: temp hack to move camera around.
-    if (input_is_key_down('A') || input_is_key_down(KEY_LEFT)) {
-        camera_yaw(state, 1.0f * delta_time);
-    }
-
-    if (input_is_key_down('D') || input_is_key_down(KEY_RIGHT)) {
-        camera_yaw(state, -1.0f * delta_time);
-    }
-
-    if (input_is_key_down(KEY_UP)) {
-        camera_pitch(state, 1.0f * delta_time);
-    }
-
-    if (input_is_key_down(KEY_DOWN)) {
-        camera_pitch(state, -1.0f * delta_time);
-    }
-
     f32 temp_move_speed = 50.0f;
     vec3 velocity = vec3_zero();
 
+    // Forward/backward movement.
     if (input_is_key_down('W')) {
         vec3 forward = mat4_forward(state->view);
         velocity = vec3_add(velocity, forward);
     }
-
     if (input_is_key_down('S')) {
         vec3 backward = mat4_backward(state->view);
         velocity = vec3_add(velocity, backward);
     }
-    
+
+    // Left/right strafe movement (A/D only).
+    if (input_is_key_down('A')) {
+        vec3 left = mat4_left(state->view);
+        velocity = vec3_add(velocity, left);
+    }
+    if (input_is_key_down('D')) {
+        vec3 right = mat4_right(state->view);
+        velocity = vec3_add(velocity, right);
+    }
+
+    // Vertical movement.
     if (input_is_key_down(KEY_SPACE)) {
         velocity.y += 1.0f;
     }
-
     if (input_is_key_down(KEY_LSHIFT)) {
         velocity.y -= 1.0f;
     }
 
+    // Camera rotation with arrow keys.
+    if (input_is_key_down(KEY_LEFT)) {
+        camera_yaw(state, 1.0f * delta_time);
+    }
+    if (input_is_key_down(KEY_RIGHT)) {
+        camera_yaw(state, -1.0f * delta_time);
+    }
+    if (input_is_key_down(KEY_UP)) {
+        camera_pitch(state, 1.0f * delta_time);
+    }
+    if (input_is_key_down(KEY_DOWN)) {
+        camera_pitch(state, -1.0f * delta_time);
+    }
+
+    // Apply velocity if non-zero.
     vec3 z = vec3_zero();
     if (!vec3_compare(z, velocity, 0.0002f)) {
-        // Be sure to normalize the velocity before applying speed.
+        // Normalize before applying speed.
         vec3_normalize(&velocity);
         state->camera_position.x += velocity.x * temp_move_speed * delta_time;
         state->camera_position.y += velocity.y * temp_move_speed * delta_time;
