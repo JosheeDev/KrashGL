@@ -81,10 +81,15 @@
         "linear_allocator_tests.h": "c",
         "expect.h": "c",
         "renderer_backend.h": "c",
-        "vulkan_object_shader.h": "c",
+        "vulkan_material_shader.h": "c",
         "vulkan_shader_utils.h": "c",
         "math_types.h": "c",
         "vulkan_command_buffer.h": "c",
-        "resource_types.h": "c"
+        "resource_types.h": "c",
+        "hashtable.h": "c",
+        "vulkan_buffer.h": "c",
+        "algorithm": "c",
+        "stb_image.h": "c",
+        "texture_system.h": "c"
     }
 }

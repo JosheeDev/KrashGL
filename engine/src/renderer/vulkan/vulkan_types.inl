@@ -37,6 +37,7 @@ typedef struct vulkan_device {
     i32 graphics_queue_index;
     i32 present_queue_index;
     i32 transfer_queue_index;
+
     b8 supports_device_local_host_visible;
 
     VkQueue graphics_queue;
@@ -133,28 +134,29 @@ typedef struct vulkan_pipeline {
     VkPipelineLayout pipeline_layout;
 } vulkan_pipeline;
 
-#define OBJECT_SHADER_STAGE_COUNT 2
+#define MATERIAL_SHADER_STAGE_COUNT 2
 
 typedef struct vulkan_descriptor_state {
     // One per frame
     u32 generations[3];
+    u32 ids[3];
 } vulkan_descriptor_state;
 
-#define VULKAN_OBJECT_SHADER_DESCRIPTOR_COUNT 2
-typedef struct vulkan_object_shader_object_state {
+#define VULKAN_MATERIAL_SHADER_DESCRIPTOR_COUNT 2
+typedef struct vulkan_material_shader_object_state {
     // Per frame
     VkDescriptorSet descriptor_sets[3];
 
     // Per descriptor
-    vulkan_descriptor_state descriptor_states[VULKAN_OBJECT_SHADER_DESCRIPTOR_COUNT];
-} vulkan_object_shader_object_state;
+    vulkan_descriptor_state descriptor_states[VULKAN_MATERIAL_SHADER_DESCRIPTOR_COUNT];
+} vulkan_material_shader_object_state;
 
 // Max number of objects
 #define VULKAN_OBJECT_MAX_OBJECT_COUNT 1024
 
-typedef struct vulkan_object_shader {
+typedef struct vulkan_material_shader {
     // vertex, fragment
-    vulkan_shader_stage stages[OBJECT_SHADER_STAGE_COUNT];
+    vulkan_shader_stage stages[MATERIAL_SHADER_STAGE_COUNT];
 
     VkDescriptorPool global_descriptor_pool;
     VkDescriptorSetLayout global_descriptor_set_layout;
@@ -176,14 +178,11 @@ typedef struct vulkan_object_shader {
     u32 object_uniform_buffer_index;
 
     // TODO: make dynamic
-    vulkan_object_shader_object_state object_states[VULKAN_OBJECT_MAX_OBJECT_COUNT];
-
-    // Pointers to default textures.
-    texture* default_diffuse;
+    vulkan_material_shader_object_state object_states[VULKAN_OBJECT_MAX_OBJECT_COUNT];
 
     vulkan_pipeline pipeline;
 
-} vulkan_object_shader;
+} vulkan_material_shader;
 
 typedef struct vulkan_context {
     f32 frame_delta_time;
@@ -238,7 +237,7 @@ typedef struct vulkan_context {
 
     b8 recreating_swapchain;
 
-    vulkan_object_shader object_shader;
+    vulkan_material_shader material_shader;
 
     u64 geometry_vertex_offset;
     u64 geometry_index_offset;
