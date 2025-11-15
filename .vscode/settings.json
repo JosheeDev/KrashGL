@@ -90,6 +90,7 @@
         "vulkan_buffer.h": "c",
         "algorithm": "c",
         "stb_image.h": "c",
-        "texture_system.h": "c"
+        "texture_system.h": "c",
+        "material_system.h": "c"
     }
 }

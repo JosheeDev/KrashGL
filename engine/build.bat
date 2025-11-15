@@ -10,7 +10,7 @@ FOR /R %%f in (*.c) do (
 
 REM echo "Files:" %cFilenames%
 SET assembly=krash
-SET compilerFlags=-g -shared -Wvarargs -Wall -Werror
+SET compilerFlags=-g -MD -Werror=vla -fdeclspec
 REM -Wall -Werror
 SET includeFlags=-Isrc -I%VULKAN_SDK%/Include
 SET linkerFlags=-luser32 -lvulkan-1 -L%VULKAN_SDK%/Lib

@@ -7,7 +7,7 @@ cFilenames=$(find . -type f -name "*.c")
 
 # echo "Files:" $cFilenames
 assembly="krash"
-compilerFlags="-g -shared -fdeclspec -fPIC"
+compilerFlags="-g -MD -Werror=vla -fdeclspec"
 # -fms-extensions 
 # -Wall -Werror
 includeFlags="-Isrc -I$VULKAN_SDK/include"
