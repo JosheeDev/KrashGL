@@ -105,7 +105,7 @@ b8 vulkan_ui_shader_create(vulkan_context* context, vulkan_ui_shader* out_shader
     scissor.extent.height = context->framebuffer_height;
 
     // Attributes
-    u32 offset = 0;
+    u64 offset = 0;
 #define ATTRIBUTE_COUNT 2
     VkVertexInputAttributeDescription attribute_descriptions[ATTRIBUTE_COUNT];
     // Position, texcoord
