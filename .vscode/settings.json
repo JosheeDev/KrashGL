@@ -19,26 +19,29 @@
     "window.zoomLevel": 0,
     "editor.tabCompletion": "on",
     "todohighlight.isEnable": true,
-    "todohighlight.keywords": [
+   "todohighlight.keywords": [
         {
             "text": "TODO:",
             "color": "red",
-            "backgroundColor": "rgba(0,0,0,0)"
+            "backgroundColor": "rgba(0,0,0,0)",
+            "overviewRulerColor": "rgba(0,0,0,0)"
         },
         {
             "text": "HACK:",
             "color": "#ff6600",
-            "backgroundColor": "rgba(0,0,0,0)"
+            "backgroundColor": "rgba(0,0,0,0)",
+            "overviewRulerColor": "rgba(0,0,0,0)"
         },
         {
             "text": "NOTE:",
             "color": "green",
-            "backgroundColor": "rgba(0,0,0,0)"
+            "backgroundColor": "rgba(0,0,0,0)",
+            "overviewRulerColor": "rgba(0,0,0,0)"
         }
     ],
     "todohighlight.defaultStyle": {
         "color": "red",
-        "backgroundColor": "#ffab00",
+        //"backgroundColor": "#ffab00",
         "overviewRulerColor": "rgba(0,0,0,0)",
         "isWholeLine": false,
     },
@@ -98,6 +101,7 @@
         "text_loader.h": "c",
         "filesystem.h": "c",
         "binary_loader.h": "c",
-        "vulkan_ui_shader.h": "c"
+        "vulkan_ui_shader.h": "c",
+        "loader_utils.h": "c"
     }
 }
