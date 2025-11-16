@@ -102,6 +102,7 @@
         "filesystem.h": "c",
         "binary_loader.h": "c",
         "vulkan_ui_shader.h": "c",
-        "loader_utils.h": "c"
+        "loader_utils.h": "c",
+        "span": "c"
     }
 }
