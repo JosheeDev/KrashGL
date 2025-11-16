@@ -103,6 +103,10 @@
         "binary_loader.h": "c",
         "vulkan_ui_shader.h": "c",
         "loader_utils.h": "c",
-        "span": "c"
+        "span": "c",
+        "xlocale": "cpp",
+        "freelist.h": "c",
+        "hashtable_tests.h": "c",
+        "freelist_tests.h": "c"
     }
 }
