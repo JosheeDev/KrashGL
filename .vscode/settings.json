@@ -109,6 +109,7 @@
         "hashtable_tests.h": "c",
         "freelist_tests.h": "c",
         "dynamic_allocator.h": "c",
-        "test_manager.h": "c"
+        "test_manager.h": "c",
+        "dynamic_allocator_tests.h": "c"
     }
 }
