@@ -97,6 +97,7 @@
         "resource_system.h": "c",
         "text_loader.h": "c",
         "filesystem.h": "c",
-        "binary_loader.h": "c"
+        "binary_loader.h": "c",
+        "vulkan_ui_shader.h": "c"
     }
 }

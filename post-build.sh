@@ -18,4 +18,20 @@ then
 echo "Error:"$ERRORLEVEL && exit
 fi
 
+echo "assets/shaders/ui/Builtin.UIShader.vert.glsl -> assets/shaders/ui/Builtin.UIShader.vert.spv"
+$VULKAN_SDK/bin/glslc -fshader-stage=vert assets/shaders/ui/Builtin.UIShader.vert.glsl -o assets/shaders/ui/Builtin.UIShader.vert.spv
+ERRORLEVEL=$?
+if [ $ERRORLEVEL -ne 0 ]
+then
+echo "Error:"$ERRORLEVEL && exit
+fi
+
+echo "assets/shaders/ui/Builtin.UIShader.frag.glsl -> assets/shaders/ui/Builtin.UIShader.frag.spv"
+$VULKAN_SDK/bin/glslc -fshader-stage=frag assets/shaders/ui/Builtin.UIShader.frag.glsl -o assets/shaders/ui/Builtin.UIShader.frag.spv
+ERRORLEVEL=$?
+if [ $ERRORLEVEL -ne 0 ]
+then
+echo "Error:"$ERRORLEVEL && exit
+fi
+
 echo "Done."
