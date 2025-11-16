@@ -91,6 +91,8 @@
         "algorithm": "c",
         "stb_image.h": "c",
         "texture_system.h": "c",
-        "material_system.h": "c"
+        "material_system.h": "c",
+        "geometry_system.h": "c",
+        "vulkan_pipeline.h": "c"
     }
 }
