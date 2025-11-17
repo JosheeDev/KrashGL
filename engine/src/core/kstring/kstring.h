@@ -179,4 +179,4 @@ KAPI b8 string_to_u64(char* str, u64* u);
  */
 KAPI b8 string_to_bool(char* str, b8* b);
 
-KAPI int strings_contains(const char *haystack, const char *needle);
+KAPI int string_contains(const char *haystack, const char *needle);

@@ -271,7 +271,7 @@ b8 string_to_bool(char* str, b8* b) {
     return strings_equal(str, "1") || strings_equali(str, "true");
 }
 
-int strings_contains(const char *haystack, const char *needle) {
+int string_contains(const char *haystack, const char *needle) {
     if (!haystack || !needle) return 0;
 
     for (const char *h = haystack; *h != '\0'; ++h) {
