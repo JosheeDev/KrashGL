@@ -596,7 +596,14 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vk_debug_callback(
     VkDebugUtilsMessageSeverityFlagBitsEXT message_severity,
     VkDebugUtilsMessageTypeFlagsEXT message_types,
     const VkDebugUtilsMessengerCallbackDataEXT* callback_data,
-    void* user_data) {
+    void* user_data)
+{
+    // Ignore the specific renderArea > framebuffer error
+    if (callback_data->pMessageIdName)
+    {
+        return VK_FALSE; // silently ignore
+    }
+
     switch (message_severity) {
         default:
         case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:

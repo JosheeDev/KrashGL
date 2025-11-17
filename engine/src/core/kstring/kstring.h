@@ -178,3 +178,5 @@ KAPI b8 string_to_u64(char* str, u64* u);
  * @return True if parsed successfully; otherwise false.
  */
 KAPI b8 string_to_bool(char* str, b8* b);
+
+KAPI int strings_contains(const char *haystack, const char *needle);
