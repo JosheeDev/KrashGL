@@ -118,6 +118,8 @@ typedef struct material_config {
     b8 auto_release;
     /** @brief The diffuse colour of the material. */
     vec4 diffuse_colour;
+    /** @brief The shininess of the material. */
+    f32 shininess;
     /** @brief The diffuse map name. */
     char diffuse_map_name[TEXTURE_NAME_MAX_LENGTH];
 } material_config;
@@ -140,6 +142,9 @@ typedef struct material {
     vec4 diffuse_colour;
     /** @brief The diffuse texture map. */
     texture_map diffuse_map;
+
+    /** @brief The material shininess, determines how concentrated the specular lighting is. */
+    f32 shininess;
 
     u32 shader_id;
 } material;

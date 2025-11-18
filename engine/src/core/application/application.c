@@ -352,11 +352,17 @@ b8 application_run() {
             // TODO: temp
             geometry_render_data test_render;
             test_render.geometry = app_state->test_geometry;
-            test_render.model = mat4_identity();
-            // static f32 angle = 0;
-            // angle += (1.0f * delta);
-            // quat rotation = quat_from_axis_angle((vec3){0, 1, 0}, angle, true);
-            // test_render.model = quat_to_mat4(rotation);  //  quat_to_rotation_matrix(rotation, vec3_zero());
+            //test_render.model = mat4_identity();
+            static f32 angle = 0;
+
+            // NOTE: Cannot enable both
+            angle = deg_to_rad(45.0f); // Comment to stop spin
+            //angle += (.5f * delta); // Uncomment to continue spin
+            
+            // TODO: Something with rotation matrices is messing up directional lighting,
+            // in particular on the x-axis it seems. It's fine before rotation.
+            quat rotation = quat_from_axis_angle((vec3){0, 1, 0}, angle, true);
+            test_render.model = quat_to_mat4(rotation);  //  quat_to_rotation_matrix(rotation, vec3_ze
 
             packet.geometry_count = 1;
             packet.geometries = &test_render;
