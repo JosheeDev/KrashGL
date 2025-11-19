@@ -113,7 +113,19 @@
         "dynamic_allocator_tests.h": "c",
         "shader_loader.h": "c",
         "shader_system.h": "c",
-        "vulkan_shader.h": "c"
+        "vulkan_shader.h": "c",
+        "array": "c",
+        "iterator": "c",
+        "list": "c",
+        "map": "c",
+        "memory": "c",
+        "set": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "xhash": "c",
+        "xmemory": "c",
+        "xstring": "c",
+        "xtree": "c"
     },
     // File copyright documentation tag.  Array of strings will be converted to one line per element.  Can template {year}.
     "doxdocgen.file.copyrightTag": [
