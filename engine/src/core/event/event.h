@@ -101,6 +101,12 @@ typedef enum system_event_code {
      */
     EVENT_CODE_MOUSE_WHEEL = 0x07,
 
+    // Change the render mode for debugging purposes.
+    /* Context usage:
+     * i32 mode = context.data.i32[0];
+     */
+    EVENT_CODE_SET_RENDER_MODE = 0x0A,
+
     // Resized/resolution changed from the OS.
     /* Context usage:
      * u16 width = data.data.u16[0];

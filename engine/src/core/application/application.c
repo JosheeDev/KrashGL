@@ -394,7 +394,7 @@ b8 application_run() {
             // angle += (.5f * delta); // Uncomment to continue spin
 
             quat rotation = quat_from_axis_angle((vec3){0, 1, 0}, angle, true);
-            test_render.model = quat_to_mat4(rotation);  //  quat_to_rotation_matrix(rotation, vec3_zero());
+            test_render.model = quat_to_mat4(rotation);
 
             packet.geometry_count = 1;
             packet.geometries = &test_render;
