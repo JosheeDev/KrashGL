@@ -125,7 +125,8 @@
         "xhash": "c",
         "xmemory": "c",
         "xstring": "c",
-        "xtree": "c"
+        "xtree": "c",
+        "geometry_utils.h": "c"
     },
     // File copyright documentation tag.  Array of strings will be converted to one line per element.  Can template {year}.
     "doxdocgen.file.copyrightTag": [
