@@ -37,6 +37,14 @@ b8 renderer_backend_create(renderer_backend_type type, renderer_backend* out_ren
         return true;
     }
 
+    if (type == RENDERER_BACKEND_TYPE_OPENGL) {
+        return true;
+    }
+
+    if (type == RENDERER_BACKEND_TYPE_DIRECTX) {
+        return true;
+    }
+
     return false;
 }
 

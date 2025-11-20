@@ -76,7 +76,9 @@ b8 renderer_system_initialize(u64* memory_requirement, void* state, const char* 
     state_ptr = state;
 
     // TODO: make this configurable.
+
     renderer_backend_create(RENDERER_BACKEND_TYPE_VULKAN, &state_ptr->backend);
+    
     state_ptr->backend.frame_number = 0;
     state_ptr->render_mode = RENDERER_VIEW_MODE_DEFAULT;
 
