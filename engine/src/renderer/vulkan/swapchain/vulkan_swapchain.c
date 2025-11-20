@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_swapchain.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/vulkan/swapchain/vulkan_swapchain.h"
 
 #include "core/logger/logger.h"

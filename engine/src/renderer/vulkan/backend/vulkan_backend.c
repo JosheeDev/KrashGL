@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_backend.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/vulkan/backend/vulkan_backend.h"
 
 #include "renderer/vulkan/vulkan_types.inl"

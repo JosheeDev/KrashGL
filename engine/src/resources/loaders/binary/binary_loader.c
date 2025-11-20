@@ -1,3 +1,9 @@
+/**
+ * @file (binary_loader.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "resources/loaders/binary/binary_loader.h"
 
 #include "core/logger/logger.h"

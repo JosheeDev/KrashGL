@@ -1,3 +1,9 @@
+/**
+ * @file (freelist.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "containers/freelist/freelist.h"
 
 #include "memory/kmemory.h"

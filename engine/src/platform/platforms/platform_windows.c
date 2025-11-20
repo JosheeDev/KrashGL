@@ -1,3 +1,9 @@
+/**
+ * @file (platform_windows.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "platform/platform.h"
 
 // Windows platform layer.

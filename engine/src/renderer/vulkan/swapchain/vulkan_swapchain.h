@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_swapchain.h)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #pragma once
 
 #include "renderer/vulkan/vulkan_types.inl"

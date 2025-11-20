@@ -1,3 +1,9 @@
+/**
+ * @file (linear_allocator.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "memory/linear_allocator/linear_allocator.h"
 
 #include "memory/kmemory.h"

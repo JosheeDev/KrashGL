@@ -1,3 +1,9 @@
+/**
+ * @file (main.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "core/test_manager/test_manager.h"
 
 #include "memory/linear_allocator_tests/linear_allocator_tests.h"

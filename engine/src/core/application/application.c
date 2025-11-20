@@ -1,3 +1,9 @@
+/**
+ * @file (application.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "core/application/application.h"
 #include "game/types/game_types.h"
 

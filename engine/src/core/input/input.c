@@ -1,3 +1,9 @@
+/**
+ * @file (input.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "core/input/input.h"
 #include "core/event/event.h"
 #include "memory/kmemory.h"

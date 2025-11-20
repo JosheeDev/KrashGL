@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_pipeline.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/vulkan/pipeline/vulkan_pipeline.h"
 #include "renderer/vulkan/utils/vulkan_utils.h"
 

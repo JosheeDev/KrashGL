@@ -1,3 +1,9 @@
+/**
+ * @file (platform_macos.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include <platform/platform.h>
 
 #if KPLATFORM_APPLE

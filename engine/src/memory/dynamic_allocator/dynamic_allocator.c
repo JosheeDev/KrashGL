@@ -1,3 +1,9 @@
+/**
+ * @file (dynamic_allocator.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "memory/dynamic_allocator/dynamic_allocator.h"
 
 #include "memory/kmemory.h"

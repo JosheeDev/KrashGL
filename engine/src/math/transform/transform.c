@@ -1,3 +1,9 @@
+/**
+ * @file (transform.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "math/transform/transform.h"
 
 #include "math/kmath.h"

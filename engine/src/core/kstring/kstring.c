@@ -1,3 +1,9 @@
+/**
+ * @file (kstring.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "core/kstring/kstring.h"
 #include "memory/kmemory.h"
 #include "containers/darray/darray.h"

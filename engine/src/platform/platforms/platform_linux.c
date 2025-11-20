@@ -1,3 +1,9 @@
+/**
+ * @file (platform_linux.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "platform/platform.h"
 
 // Linux platform layer.

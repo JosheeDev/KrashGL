@@ -1,3 +1,9 @@
+/**
+ * @file (test_manager.h)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #pragma once
 
 #include <core/defines.h>

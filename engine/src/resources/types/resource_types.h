@@ -1,3 +1,9 @@
+/**
+ * @file (resource_types.h)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #pragma once
 
 #include "math/types/math_types.h"

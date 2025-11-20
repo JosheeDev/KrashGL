@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_buffer.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/vulkan/buffer/vulkan_buffer.h"
 
 #include "renderer/vulkan/device/vulkan_device.h"

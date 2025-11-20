@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_device.h)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #pragma once
 
 #include "renderer/vulkan/vulkan_types.inl"

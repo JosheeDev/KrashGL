@@ -1,3 +1,9 @@
+/**
+ * @file (renderer_frontend.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/frontend/renderer_frontend.h"
 
 #include "renderer/backend/renderer_backend.h"

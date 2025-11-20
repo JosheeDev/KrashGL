@@ -1,3 +1,9 @@
+/**
+ * @file (darray.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "containers/darray/darray.h"
 
 #include "memory/kmemory.h"

@@ -1,3 +1,9 @@
+/**
+ * @file (defines.h)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #pragma once
 
 // Unsigned int types.

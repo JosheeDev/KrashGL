@@ -2,6 +2,14 @@ set echo on
 
 echo "Building everything..."
 
+echo "Adding doxygen..."
+# Run the header script
+bash "$(dirname "$0")/rename.sh"
+ERRORLEVEL=$?
+if [ $ERRORLEVEL -ne 0 ]; then
+    echo "Error: $ERRORLEVEL"
+    exit $ERRORLEVEL
+fi
 
 # pushd engine
 # source build.sh

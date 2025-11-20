@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_command_buffer.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/vulkan/command_buffer/vulkan_command_buffer.h"
 
 #include "memory/kmemory.h"

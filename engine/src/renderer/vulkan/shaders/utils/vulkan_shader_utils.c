@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_shader_utils.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/vulkan/shaders/utils/vulkan_shader_utils.h"
 
 #include "core/kstring/kstring.h"

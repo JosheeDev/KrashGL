@@ -18,6 +18,11 @@ ECHO "Building everything..."
 @REM POPD
 @REM IF %ERRORLEVEL% NEQ 0 (echo Error:%ERRORLEVEL% && exit)
 
+ECHO "Adding doxygen..."
+REM Run PowerShell script to add headers
+powershell -ExecutionPolicy Bypass -File "%~dp0rename.ps1"
+IF %ERRORLEVEL% NEQ 0 (echo Error:%ERRORLEVEL% && exit)
+
 REM Engine
 make -f "Makefile.engine.windows.mak" all
 IF %ERRORLEVEL% NEQ 0 (echo Error:%ERRORLEVEL% && exit)

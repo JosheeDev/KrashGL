@@ -1,3 +1,9 @@
+/**
+ * @file (clock.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "core/clock/clock.h"
 
 #include "platform/platform.h"

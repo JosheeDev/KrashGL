@@ -1,3 +1,9 @@
+/**
+ * @file (hashtable.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "containers/hashtable/hashtable.h"
 
 #include "memory/kmemory.h"

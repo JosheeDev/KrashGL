@@ -1,3 +1,9 @@
+/**
+ * @file (material_loader.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "resources/loaders/material/material_loader.h"
 
 #include "core/logger/logger.h"

@@ -1,3 +1,9 @@
+/**
+ * @file (test_manager.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "test_manager.h"
 
 #include <containers/darray/darray.h>

@@ -1,3 +1,9 @@
+/**
+ * @file (kmemory.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "memory/kmemory.h"
 
 #include "core/logger/logger.h"

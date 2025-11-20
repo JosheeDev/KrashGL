@@ -1,3 +1,9 @@
+/**
+ * @file (event.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "core/event/event.h"
 
 #include "memory/kmemory.h"

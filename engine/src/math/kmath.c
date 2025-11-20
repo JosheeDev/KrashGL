@@ -1,3 +1,9 @@
+/**
+ * @file (kmath.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "math/kmath.h"
 #include "platform/platform.h"
 

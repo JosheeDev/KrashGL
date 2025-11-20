@@ -1,3 +1,9 @@
+/**
+ * @file (hashtable_tests.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "hashtable_tests.h"
 #include "../../core/test_manager/test_manager.h"
 #include "../../core/expect.h"

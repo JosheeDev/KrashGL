@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_device.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/vulkan/device/vulkan_device.h"
 #include "core/logger/logger.h"
 #include "core/kstring/kstring.h"

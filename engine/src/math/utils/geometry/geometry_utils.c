@@ -1,3 +1,9 @@
+/**
+ * @file (geometry_utils.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "math/utils/geometry/geometry_utils.h"
 
 #include "math/kmath.h"

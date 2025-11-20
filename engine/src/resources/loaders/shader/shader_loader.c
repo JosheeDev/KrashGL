@@ -1,3 +1,9 @@
+/**
+ * @file (shader_loader.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "resources/loaders/shader/shader_loader.h"
 
 #include "core/logger/logger.h"

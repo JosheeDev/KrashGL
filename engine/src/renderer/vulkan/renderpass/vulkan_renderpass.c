@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_renderpass.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/vulkan/renderpass/vulkan_renderpass.h"
 
 #include "memory/kmemory.h"

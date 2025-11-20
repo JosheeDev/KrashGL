@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_utils.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/vulkan/utils/vulkan_utils.h"
 
 const char* vulkan_result_string(VkResult result, b8 get_extended) {

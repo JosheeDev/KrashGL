@@ -1,3 +1,9 @@
+/**
+ * @file (renderer_backend.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "renderer/backend/renderer_backend.h"
 
 #include "renderer/vulkan/backend/vulkan_backend.h"

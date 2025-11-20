@@ -1,3 +1,9 @@
+/**
+ * @file (expect.h)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include <core/logger/logger.h>
 #include <math/kmath.h>
 

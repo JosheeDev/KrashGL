@@ -1,3 +1,9 @@
+/**
+ * @file (loader_utils.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "resources/loaders/utils/loader_utils.h"
 
 #include "memory/kmemory.h"

@@ -1,3 +1,9 @@
+/**
+ * @file (game.c)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #include "game.h"
 
 #include <core/logger/logger.h>
