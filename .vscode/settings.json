@@ -131,7 +131,8 @@
         "locale": "cpp",
         "optional": "cpp",
         "filesystem": "c",
-        "material_loader.h": "c"
+        "material_loader.h": "c",
+        "forward_list": "c"
     },
     // File copyright documentation tag.  Array of strings will be converted to one line per element.  Can template {year}.
     "doxdocgen.file.copyrightTag": [
