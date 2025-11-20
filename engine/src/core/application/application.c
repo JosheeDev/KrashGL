@@ -264,34 +264,6 @@ b8 application_create(game* game_inst) {
     // Clean up the allocations for the geometry config.
     geometry_system_config_dispose(&g_config);
 
-    // A second cube
-    mesh* cube_mesh_2 = &app_state->meshes[app_state->mesh_count];
-    cube_mesh_2->geometry_count = 1;
-    cube_mesh_2->geometries = kallocate(sizeof(mesh*) * cube_mesh_2->geometry_count, MEMORY_TAG_ARRAY);
-    g_config = geometry_system_generate_cube_config(5.0f, 5.0f, 5.0f, 1.0f, 1.0f, "test_cube_2", "test_material");
-    geometry_generate_tangents(g_config.vertex_count, g_config.vertices, g_config.index_count, g_config.indices);
-    cube_mesh_2->geometries[0] = geometry_system_acquire_from_config(g_config, true);
-    cube_mesh_2->transform = transform_from_position((vec3){10.0f, 0.0f, 1.0f});
-    // Set the first cube as the parent to the second.
-    transform_set_parent(&cube_mesh_2->transform, &cube_mesh->transform);
-    app_state->mesh_count++;
-    // Clean up the allocations for the geometry config.
-    geometry_system_config_dispose(&g_config);
-
-    // A third cube!
-    mesh* cube_mesh_3 = &app_state->meshes[app_state->mesh_count];
-    cube_mesh_3->geometry_count = 1;
-    cube_mesh_3->geometries = kallocate(sizeof(mesh*) * cube_mesh_3->geometry_count, MEMORY_TAG_ARRAY);
-    g_config = geometry_system_generate_cube_config(2.0f, 2.0f, 2.0f, 1.0f, 1.0f, "test_cube_2", "test_material");
-    geometry_generate_tangents(g_config.vertex_count, g_config.vertices, g_config.index_count, g_config.indices);
-    cube_mesh_3->geometries[0] = geometry_system_acquire_from_config(g_config, true);
-    cube_mesh_3->transform = transform_from_position((vec3){5.0f, 0.0f, 1.0f});
-    // Set the second cube as the parent to the third.
-    transform_set_parent(&cube_mesh_3->transform, &cube_mesh_2->transform);
-    app_state->mesh_count++;
-    // Clean up the allocations for the geometry config.
-    geometry_system_config_dispose(&g_config);
-
     // Load up some test UI geometry.
     geometry_config ui_config;
     ui_config.vertex_size = sizeof(vertex_2d);
