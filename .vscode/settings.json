@@ -129,7 +129,9 @@
         "geometry_utils.h": "c",
         "expected": "cpp",
         "locale": "cpp",
-        "optional": "cpp"
+        "optional": "cpp",
+        "filesystem": "c",
+        "material_loader.h": "c"
     },
     // File copyright documentation tag.  Array of strings will be converted to one line per element.  Can template {year}.
     "doxdocgen.file.copyrightTag": [
