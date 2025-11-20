@@ -136,7 +136,7 @@
     },
     // File copyright documentation tag.  Array of strings will be converted to one line per element.  Can template {year}.
     "doxdocgen.file.copyrightTag": [
-        "@copyright Krash Game Engine is Copyright (c) JosheeDev 2025-{year}"
+        "@copyright Krash Game Library is Copyright (c) JosheeDev 2025-{year}"
     ],
     "doxdocgen.file.versionTag": "@version 1.0",
     "doxdocgen.generic.authorName": "JosheeDev",
