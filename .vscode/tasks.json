@@ -116,6 +116,35 @@
                 "cwd": "${workspaceFolder}"
             },
             "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "Add Doxygen",
+            "windows": {
+                "command": "powershell",
+                "args": [
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    "${workspaceFolder}/rename.ps1"
+                ]
+            },
+            "linux": {
+                "command": "bash",
+                "args": [
+                    "${workspaceFolder}/rename.sh"
+                ]
+            },
+            "osx": {
+                "command": "bash",
+                "args": [
+                    "${workspaceFolder}/rename.sh"
+                ]
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build"
         }
     ],
     "version": "2.0.0"
