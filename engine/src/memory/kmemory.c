@@ -116,7 +116,7 @@ void* kallocate(u64 size, memory_tag tag) {
         block = dynamic_allocator_allocate(&state_ptr->allocator, size);
     } else {
         // If the system is not up yet, warn about it but give memory for now.
-        // KWARN("kallocate called before the memory system is initialized.");
+        KWARN("kallocate called before the memory system is initialized.");
         // TODO: Memory alignment
         block = platform_allocate(size, false);
     }

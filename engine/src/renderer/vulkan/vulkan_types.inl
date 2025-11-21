@@ -1,3 +1,9 @@
+/**
+ * @file (vulkan_types.inl)
+ * @author JosheeDev
+ * @copyright KrashGL Game Library (c) JosheeDev
+ */
+
 #pragma once
 
 #include "core/defines.h"
@@ -181,10 +187,8 @@ typedef struct vulkan_swapchain {
     VkSwapchainKHR handle;
     /** @brief The number of swapchain images. */
     u32 image_count;
-    /** @brief An array of swapchain images. */
-    VkImage* images;
-    /** @brief An array of swapchain image views for the swapchain images. */
-    VkImageView* views;
+    /** @brief An array of pointers to render targets, which contain swapchain images. */
+    texture** render_textures;
 
     /** @brief The depth image attachment. */
     vulkan_image depth_attachment;
@@ -536,11 +540,3 @@ typedef struct vulkan_context {
     i32 (*find_memory_index)(u32 type_filter, u32 property_flags);
 
 } vulkan_context;
-
-/**
- * @brief Represents Vulkan-specific texture data.
- */
-typedef struct vulkan_texture_data {
-    /** @brief The internal Vulkan image. */
-    vulkan_image image;
-} vulkan_texture_data;

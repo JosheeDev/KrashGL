@@ -1,4 +1,4 @@
-find . -type f \( -name "*.c" -o -name "*.h" \) | while read -r file; do
+find . -type f \( -name "*.c" -o -name "*.h" -name "*.inl" \) | while read -r file; do
     if head -n 5 "$file" | grep -q "@file"; then
         echo "Skipping $file (header already present)"
     else

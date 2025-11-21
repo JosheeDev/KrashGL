@@ -82,9 +82,7 @@ b8 renderer_system_initialize(u64* memory_requirement, void* state, const char* 
     state_ptr = state;
 
     // TODO: make this configurable.
-
     renderer_backend_create(RENDERER_BACKEND_TYPE_VULKAN, &state_ptr->backend);
-    
     state_ptr->backend.frame_number = 0;
     state_ptr->render_mode = RENDERER_VIEW_MODE_DEFAULT;
 
@@ -145,7 +143,7 @@ void renderer_on_resized(u16 width, u16 height) {
         state_ptr->ui_projection = mat4_orthographic(0, (f32)width, (f32)height, 0, -100.f, 100.0f);  // Intentionally flipped on y axis.
         state_ptr->backend.resized(&state_ptr->backend, width, height);
     } else {
-        // KWARN("renderer backend does not exist to accept resize: %i %i", width, height);
+        KWARN("renderer backend does not exist to accept resize: %i %i", width, height);
     }
 }
 
@@ -232,7 +230,6 @@ b8 renderer_draw_frame(render_packet* packet) {
             } else {
                 m = material_system_get_default();
             }
-
             // Apply the material
             b8 needs_update = m->render_frame_number != state_ptr->backend.frame_number;
             if (!material_system_apply_instance(m, needs_update)) {
@@ -273,13 +270,26 @@ void renderer_set_view(mat4 view, vec3 view_position) {
     state_ptr->view_position = view_position;
 }
 
-void renderer_create_texture(const u8* pixels, struct texture* texture) {
-    state_ptr->backend.create_texture(pixels, texture);
+void renderer_texture_create(const u8* pixels, struct texture* texture) {
+    state_ptr->backend.texture_create(pixels, texture);
 }
 
-void renderer_destroy_texture(struct texture* texture) {
-    state_ptr->backend.destroy_texture(texture);
+void renderer_texture_destroy(struct texture* texture) {
+    state_ptr->backend.texture_destroy(texture);
 }
+
+void renderer_texture_create_writeable(texture* t) {
+    state_ptr->backend.texture_create_writeable(t);
+}
+
+void renderer_texture_write_data(texture* t, u32 offset, u32 size, const u8* pixels) {
+    state_ptr->backend.texture_write_data(t, offset, size, pixels);
+}
+
+void renderer_texture_resize(texture* t, u32 new_width, u32 new_height) {
+    state_ptr->backend.texture_resize(t, new_width, new_height);
+}
+
 
 b8 renderer_create_geometry(geometry* geometry, u32 vertex_size, u32 vertex_count, const void* vertices, u32 index_size, u32 index_count, const void* indices) {
     return state_ptr->backend.create_geometry(geometry, vertex_size, vertex_count, vertices, index_size, index_count, indices);

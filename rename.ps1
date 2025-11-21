@@ -1,4 +1,4 @@
-Get-ChildItem -Recurse -Include *.c,*.h | ForEach-Object {
+Get-ChildItem -Recurse -Include *.c,*.h, *.inl | ForEach-Object {
     $header = @"
 /**
  * @file ($($_.Name))
