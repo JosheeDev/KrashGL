@@ -21,4 +21,12 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Tools
+make -f Makefile.tools.linux.mak clean
+ERRORLEVEL=$?
+if [ $ERRORLEVEL -ne 0 ]
+then
+echo "Error:"$ERRORLEVEL && exit
+fi
+
 echo "All assemblies cleaned successfully."

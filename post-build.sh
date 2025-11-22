@@ -1,53 +1,21 @@
-#!/bin/bash
-
 echo "Compiling shaders..."
 
-echo "assets/shaders/material/Builtin.MaterialShader.vert.glsl -> assets/shaders/material/Builtin.MaterialShader.vert.spv"
-$VULKAN_SDK/bin/glslc -fshader-stage=vert assets/shaders/material/Builtin.MaterialShader.vert.glsl -o assets/shaders/material/Builtin.MaterialShader.vert.spv
+pushd bin
+# The tools command to build shaders.
+./tools buildshaders \
+../assets/shaders/Builtin.MaterialShader.vert.glsl \
+../assets/shaders/Builtin.MaterialShader.frag.glsl \
+../assets/shaders/Builtin.UIShader.vert.glsl \
+../assets/shaders/Builtin.UIShader.frag.glsl \
+../assets/shaders/Builtin.SkyboxShader.vert.glsl \
+../assets/shaders/Builtin.SkyboxShader.frag.glsl \
+
 ERRORLEVEL=$?
 if [ $ERRORLEVEL -ne 0 ]
 then
 echo "Error:"$ERRORLEVEL && exit
 fi
 
-echo "assets/shaders/material/Builtin.MaterialShader.frag.glsl -> assets/shaders/material/Builtin.MaterialShader.frag.spv"
-$VULKAN_SDK/bin/glslc -fshader-stage=frag assets/shaders/material/Builtin.MaterialShader.frag.glsl -o assets/shaders/material/Builtin.MaterialShader.frag.spv
-ERRORLEVEL=$?
-if [ $ERRORLEVEL -ne 0 ]
-then
-echo "Error:"$ERRORLEVEL && exit
-fi
-
-echo "assets/shaders/ui/Builtin.UIShader.vert.glsl -> assets/shaders/ui/Builtin.UIShader.vert.spv"
-$VULKAN_SDK/bin/glslc -fshader-stage=vert assets/shaders/ui/Builtin.UIShader.vert.glsl -o assets/shaders/ui/Builtin.UIShader.vert.spv
-ERRORLEVEL=$?
-if [ $ERRORLEVEL -ne 0 ]
-then
-echo "Error:"$ERRORLEVEL && exit
-fi
-
-echo "assets/shaders/ui/Builtin.UIShader.frag.glsl -> assets/shaders/ui/Builtin.UIShader.frag.spv"
-$VULKAN_SDK/bin/glslc -fshader-stage=frag assets/shaders/ui/Builtin.UIShader.frag.glsl -o assets/shaders/ui/Builtin.UIShader.frag.spv
-ERRORLEVEL=$?
-if [ $ERRORLEVEL -ne 0 ]
-then
-echo "Error:"$ERRORLEVEL && exit
-fi
-
-echo "assets/shaders/Builtin.SkyboxShader.vert.glsl -> assets/shaders/Builtin.SkyboxShader.vert.spv"
-$VULKAN_SDK/bin/glslc -fshader-stage=vert assets/shaders/Builtin.SkyboxShader.vert.glsl -o assets/shaders/Builtin.SkyboxShader.vert.spv
-ERRORLEVEL=$?
-if [ $ERRORLEVEL -ne 0 ]
-then
-echo "Error:"$ERRORLEVEL && exit
-fi
-
-echo "assets/shaders/Builtin.SkyboxShader.frag.glsl -> assets/shaders/Builtin.SkyboxShader.frag.spv"
-$VULKAN_SDK/bin/glslc -fshader-stage=frag assets/shaders/Builtin.SkyboxShader.frag.glsl -o assets/shaders/Builtin.SkyboxShader.frag.spv
-ERRORLEVEL=$?
-if [ $ERRORLEVEL -ne 0 ]
-then
-echo "Error:"$ERRORLEVEL && exit
-fi
+popd
 
 echo "Done."
