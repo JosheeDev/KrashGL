@@ -15,6 +15,7 @@
 // TODO: temporary - make factory and register instead.
 #include "renderer/views/world/renderer_view_world.h"
 #include "renderer/views/ui/renderer_view_ui.h"
+#include "renderer/views/skybox/renderer_view_skybox.h"
 
 typedef struct render_view_system_state {
     hashtable lookup;
@@ -138,6 +139,12 @@ b8 render_view_system_create(const render_view_config* config) {
         view->on_create = render_view_ui_on_create;
         view->on_destroy = render_view_ui_on_destroy;
         view->on_resize = render_view_ui_on_resize;
+    } else if (config->type == RENDERER_VIEW_KNOWN_TYPE_SKYBOX) {
+        view->on_build_packet = render_view_skybox_on_build_packet;  // For building the packet
+        view->on_render = render_view_skybox_on_render;              // For rendering the packet
+        view->on_create = render_view_skybox_on_create;
+        view->on_destroy = render_view_skybox_on_destroy;
+        view->on_resize = render_view_skybox_on_resize;
     }
 
     // Call the on create
@@ -188,6 +195,6 @@ b8 render_view_system_on_render(const render_view* view, const render_view_packe
         return view->on_render(view, packet, frame_number, render_target_index);
     }
 
-    KERROR("render_view_system_on_render requires valid pointers to a view and a packet.");
+    KERROR("render_view_system_on_render requires a valid pointer to a data.");
     return false;
 }

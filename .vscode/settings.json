@@ -137,7 +137,9 @@
         "renderer_view_ui.h": "c",
         "renderer_view_world.h": "c",
         "view_system.h": "c",
-        "camera_system.h": "c"
+        "camera_system.h": "c",
+        "renderer_view_skybox.h": "c",
+        "mesh_loader.h": "c"
     },
     // File copyright documentation tag.  Array of strings will be converted to one line per element.  Can template {year}.
     "doxdocgen.file.copyrightTag": [

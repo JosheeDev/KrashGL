@@ -24,7 +24,7 @@ typedef struct resource_system_state {
 
 static resource_system_state* state_ptr = 0;
 
-b8 load(const char* name, resource_loader* loader, resource* out_resource);
+b8 load(const char* name, resource_loader* loader, void* params, resource* out_resource);
 
 b8 resource_system_initialize(u64* memory_requirement, void* state, resource_system_config config) {
     if (config.max_loader_count == 0) {
@@ -98,14 +98,14 @@ b8 resource_system_register_loader(resource_loader loader) {
     return false;
 }
 
-b8 resource_system_load(const char* name, resource_type type, resource* out_resource) {
+b8 resource_system_load(const char* name, resource_type type, void* params, resource* out_resource) {
     if (state_ptr && type != RESOURCE_TYPE_CUSTOM) {
         // Select loader.
         u32 count = state_ptr->config.max_loader_count;
         for (u32 i = 0; i < count; ++i) {
             resource_loader* l = &state_ptr->registered_loaders[i];
             if (l->id != INVALID_ID && l->type == type) {
-                return load(name, l, out_resource);
+                return load(name, l, params, out_resource);
             }
         }
     }
@@ -115,14 +115,14 @@ b8 resource_system_load(const char* name, resource_type type, resource* out_reso
     return false;
 }
 
-b8 resource_system_load_custom(const char* name, const char* custom_type, resource* out_resource) {
+b8 resource_system_load_custom(const char* name, const char* custom_type, void* params, resource* out_resource) {
     if (state_ptr && custom_type && string_length(custom_type) > 0) {
         // Select loader.
         u32 count = state_ptr->config.max_loader_count;
         for (u32 i = 0; i < count; ++i) {
             resource_loader* l = &state_ptr->registered_loaders[i];
             if (l->id != INVALID_ID && l->type == RESOURCE_TYPE_CUSTOM && strings_equali(l->custom_type, custom_type)) {
-                return load(name, l, out_resource);
+                return load(name, l, params, out_resource);
             }
         }
     }
@@ -152,12 +152,14 @@ const char* resource_system_base_path() {
     return "";
 }
 
-b8 load(const char* name, resource_loader* loader, resource* out_resource) {
+b8 load(const char* name, resource_loader* loader, void* params, resource* out_resource) {
     if (!name || !loader || !loader->load || !out_resource) {
-        out_resource->loader_id = INVALID_ID;
+        if (out_resource) {
+            out_resource->loader_id = INVALID_ID;
+        }
         return false;
     }
 
     out_resource->loader_id = loader->id;
-    return loader->load(loader, name, out_resource);
+    return loader->load(loader, name, params, out_resource);
 }
