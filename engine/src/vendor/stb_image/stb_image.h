@@ -1,9 +1,3 @@
-/**
- * @file (stb_image.h)
- * @author JosheeDev
- * @copyright KrashGL Game Library (c) JosheeDev
- */
-
 /* stb_image - v2.27 - public domain image loader - http://nothings.org/stb
                                   no warranty implied; use at your own risk
 

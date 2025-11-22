@@ -1,4 +1,10 @@
-find . -type f \( -name "*.c" -o -name "*.h" -name "*.inl" \) | while read -r file; do
+find . -type f \( -name "*.c" -o -name "*.h" -o -name "*.inl" \) | while read -r file; do
+    # Skip files inside engine/src/vendor
+    if echo "$file" | grep -q "engine/src/vendor"; then
+        echo "Skipping $file (inside vendor folder)"
+        continue
+    fi
+
     if head -n 5 "$file" | grep -q "@file"; then
         echo "Skipping $file (header already present)"
     else

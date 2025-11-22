@@ -1,4 +1,10 @@
-Get-ChildItem -Recurse -Include *.c,*.h, *.inl | ForEach-Object {
+Get-ChildItem -Recurse -Include *.c,*.h,*.inl | ForEach-Object {
+    # Skip files inside engine/src/vendor
+    if ($_.FullName -like "*engine\src\vendor*") {
+        Write-Host "Skipping $($_.Name) (inside vendor folder)"
+        return
+    }
+
     $header = @"
 /**
  * @file ($($_.Name))
