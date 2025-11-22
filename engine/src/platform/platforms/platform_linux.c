@@ -12,6 +12,8 @@
 #include "core/logger/logger.h"
 #include "core/event/event.h"
 #include "core/input/input.h"
+#include "core/kthread/kthread.h"
+#include "core/kmutex/kmutex.h"
 
 #include "containers/darray/darray.h"
 
@@ -19,7 +21,7 @@
 #include <X11/keysym.h>
 #include <X11/XKBlib.h>  // sudo apt-get install libx11-dev
 #include <X11/Xlib.h>
-#include <X11/Xlib-xcb.h>  // sudo apt-get install libxkbcommon-x11-dev
+#include <X11/Xlib-xcb.h>  // sudo apt-get install libxkbcommon-x11-dev libx11-xcb-dev
 #include <sys/time.h>
 
 #if _POSIX_C_SOURCE >= 199309L
@@ -27,6 +29,10 @@
 #else
 #include <unistd.h>  // usleep
 #endif
+
+#include <pthread.h>
+#include <errno.h>        // For error reporting
+#include <sys/sysinfo.h>  // Processor info
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -112,17 +118,17 @@ b8 platform_system_startup(
     u32 value_list[] = {state_ptr->screen->black_pixel, event_values};
 
     // Create the window
-    xcb_void_cookie_t cookie = xcb_create_window(
+    xcb_create_window(
         state_ptr->connection,
         XCB_COPY_FROM_PARENT,  // depth
         state_ptr->window,
         state_ptr->screen->root,        // parent
-        x,                              //x
-        y,                              //y
-        width,                          //width
-        height,                         //height
+        x,                              // x
+        y,                              // y
+        width,                          // width
+        height,                         // height
         0,                              // No border
-        XCB_WINDOW_CLASS_INPUT_OUTPUT,  //class
+        XCB_WINDOW_CLASS_INPUT_OUTPUT,  // class
         state_ptr->screen->root_visual,
         event_mask,
         value_list);
@@ -201,12 +207,7 @@ b8 platform_pump_messages() {
         b8 quit_flagged = false;
 
         // Poll for events until null is returned.
-        while (event != 0) {
-            event = xcb_poll_for_event(state_ptr->connection);
-            if (event == 0) {
-                break;
-            }
-
+        while ((event = xcb_poll_for_event(state_ptr->connection))) {
             // Input events
             switch (event->response_type & ~0x80) {
                 case XCB_KEY_PRESS:
@@ -217,9 +218,9 @@ b8 platform_pump_messages() {
                     xcb_keycode_t code = kb_event->detail;
                     KeySym key_sym = XkbKeycodeToKeysym(
                         state_ptr->display,
-                        (KeyCode)code,  //event.xkey.keycode,
+                        (KeyCode)code,  // event.xkey.keycode,
                         0,
-                         0 /*code & ShiftMask ? 1 : 0*/);
+                        0 /*code & ShiftMask ? 1 : 0*/);
 
                     keys key = translate_keycode(key_sym);
 
@@ -337,13 +338,228 @@ void platform_sleep(u64 ms) {
 #endif
 }
 
+i32 platform_get_processor_count() {
+    // Load processor info.
+    i32 processor_count = get_nprocs_conf();
+    i32 processors_available = get_nprocs();
+    KINFO("%i processor cores detected, %i cores available.", processor_count, processors_available);
+    return processors_available;
+}
+
+// NOTE: Begin threads.
+
+b8 kthread_create(pfn_thread_start start_function_ptr, void* params, b8 auto_detach, kthread* out_thread) {
+    if (!start_function_ptr) {
+        return false;
+    }
+
+    // pthread_create uses a function pointer that returns void*, so cold-cast to this type.
+    i32 result = pthread_create((pthread_t*)&out_thread->thread_id, 0, (void* (*)(void*))start_function_ptr, params);
+    if (result != 0) {
+        switch (result) {
+            case EAGAIN:
+                KERROR("Failed to create thread: insufficient resources to create another thread.");
+                return false;
+            case EINVAL:
+                KERROR("Failed to create thread: invalid settings were passed in attributes..");
+                return false;
+            default:
+                KERROR("Failed to create thread: an unhandled error has occurred. errno=%i", result);
+                return false;
+        }
+    }
+    KDEBUG("Starting process on thread id: %#x", out_thread->thread_id);
+
+    // Only save off the handle if not auto-detaching.
+    if (!auto_detach) {
+        out_thread->internal_data = platform_allocate(sizeof(u64), false);
+        *(u64*)out_thread->internal_data = out_thread->thread_id;
+    } else {
+        // If immediately detaching, make sure the operation is a success.
+        result = pthread_detach(out_thread->thread_id);
+        if (result != 0) {
+            switch (result) {
+                case EINVAL:
+                    KERROR("Failed to detach newly-created thread: thread is not a joinable thread.");
+                    return false;
+                case ESRCH:
+                    KERROR("Failed to detach newly-created thread: no thread with the id %#x could be found.", out_thread->thread_id);
+                    return false;
+                default:
+                    KERROR("Failed to detach newly-created thread: an unknown error has occurred. errno=%i", result);
+                    return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+void kthread_destroy(kthread* thread) {
+    kthread_cancel(thread);
+}
+
+void kthread_detach(kthread* thread) {
+    if (thread->internal_data) {
+        i32 result = pthread_detach(*(pthread_t*)thread->internal_data);
+        if (result != 0) {
+            switch (result) {
+                case EINVAL:
+                    KERROR("Failed to detach thread: thread is not a joinable thread.");
+                    break;
+                case ESRCH:
+                    KERROR("Failed to detach thread: no thread with the id %#x could be found.", thread->thread_id);
+                    break;
+                default:
+                    KERROR("Failed to detach thread: an unknown error has occurred. errno=%i", result);
+                    break;
+            }
+        }
+        platform_free(thread->internal_data, false);
+        thread->internal_data = 0;
+    }
+}
+
+void kthread_cancel(kthread* thread) {
+    if (thread->internal_data) {
+        i32 result = pthread_cancel(*(pthread_t*)thread->internal_data);
+        if (result != 0) {
+            switch (result) {
+                case ESRCH:
+                    KERROR("Failed to cancel thread: no thread with the id %#x could be found.", thread->thread_id);
+                    break;
+                default:
+                    KERROR("Failed to cancel thread: an unknown error has occurred. errno=%i", result);
+                    break;
+            }
+        }
+        platform_free(thread->internal_data, false);
+        thread->internal_data = 0;
+        thread->thread_id = 0;
+    }
+}
+
+b8 kthread_is_active(kthread* thread) {
+    // TODO: Find a better way to verify this.
+    return thread->internal_data != 0;
+}
+
+void kthread_sleep(kthread* thread, u64 ms) {
+    platform_sleep(ms);
+}
+
+u64 get_thread_id() {
+    return (u64)pthread_self();
+}
+// NOTE: End threads.
+
+
+// NOTE: Begin mutexes
+b8 kmutex_create(kmutex* out_mutex) {
+    if (!out_mutex) {
+        return false;
+    }
+
+    // Initialize
+    pthread_mutex_t mutex;
+    i32 result = pthread_mutex_init(&mutex, 0);
+    if (result != 0) {
+        KERROR("Mutex creation failure!");
+        return false;
+    }
+
+    // Save off the mutex handle.
+    out_mutex->internal_data = platform_allocate(sizeof(pthread_mutex_t), false);
+    *(pthread_mutex_t*)out_mutex->internal_data = mutex;
+
+    return true;
+}
+
+void kmutex_destroy(kmutex* mutex) {
+    if (mutex) {
+        i32 result = pthread_mutex_destroy((pthread_mutex_t*)mutex->internal_data);
+        switch (result) {
+            case 0:
+                // KTRACE("Mutex destroyed.");
+                break;
+            case EBUSY:
+                KERROR("Unable to destroy mutex: mutex is locked or referenced.");
+                break;
+            case EINVAL:
+                KERROR("Unable to destroy mutex: the value specified by mutex is invalid.");
+                break;
+            default:
+                KERROR("An handled error has occurred while destroy a mutex: errno=%i", result);
+                break;
+        }
+
+        platform_free(mutex->internal_data, false);
+        mutex->internal_data = 0;
+    }
+}
+
+b8 kmutex_lock(kmutex* mutex) {
+    if (!mutex) {
+        return false;
+    }
+    // Lock
+    i32 result = pthread_mutex_lock((pthread_mutex_t*)mutex->internal_data);
+    switch (result) {
+        case 0:
+            // Success, everything else is a failure.
+            // KTRACE("Obtained mutex lock.");
+            return true;
+        case EOWNERDEAD:
+            KERROR("Owning thread terminated while mutex still active.");
+            return false;
+        case EAGAIN:
+            KERROR("Unable to obtain mutex lock: the maximum number of recursive mutex locks has been reached.");
+            return false;
+        case EBUSY:
+            KERROR("Unable to obtain mutex lock: a mutex lock already exists.");
+            return false;
+        case EDEADLK:
+            KERROR("Unable to obtain mutex lock: a mutex deadlock was detected.");
+            return false;
+        default:
+            KERROR("An handled error has occurred while obtaining a mutex lock: errno=%i", result);
+            return false;
+    }
+}
+
+b8 kmutex_unlock(kmutex* mutex) {
+    if (!mutex) {
+        return false;
+    }
+    if (mutex->internal_data) {
+        i32 result = pthread_mutex_unlock((pthread_mutex_t*)mutex->internal_data);
+        switch (result) {
+            case 0:
+                // KTRACE("Freed mutex lock.");
+                return true;
+            case EOWNERDEAD:
+                KERROR("Unable to unlock mutex: owning thread terminated while mutex still active.");
+                return false;
+            case EPERM:
+                KERROR("Unable to unlock mutex: mutex not owned by current thread.");
+                return false;
+            default:
+                KERROR("An handled error has occurred while unlocking a mutex lock: errno=%i", result);
+                return false;
+        }
+    }
+
+    return false;
+}
+// NOTE: End mutexes
+
 void platform_get_required_extension_names(const char*** names_darray) {
     darray_push(*names_darray, &"VK_KHR_xcb_surface");  // VK_KHR_xlib_surface?
 }
 
 // Surface creation for Vulkan
 b8 platform_create_vulkan_surface(vulkan_context* context) {
-    if(!state_ptr) {
+    if (!state_ptr) {
         return false;
     }
 
@@ -374,8 +590,8 @@ keys translate_keycode(u32 x_keycode) {
             return KEY_ENTER;
         case XK_Tab:
             return KEY_TAB;
-            //case XK_Shift: return KEY_SHIFT;
-            //case XK_Control: return KEY_CONTROL;
+            // case XK_Shift: return KEY_SHIFT;
+            // case XK_Control: return KEY_CONTROL;
 
         case XK_Pause:
             return KEY_PAUSE;
