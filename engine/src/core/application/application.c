@@ -474,6 +474,7 @@ b8 application_create(game* game_inst) {
     }
 
     // Call resize once to ensure the proper size has been set.
+    renderer_on_resized(app_state->width, app_state->height);
     app_state->game_inst->on_resize(app_state->game_inst, app_state->width, app_state->height);
 
     return true;
@@ -513,22 +514,6 @@ b8 application_run() {
                 KFATAL("Game render failed, shutting down.");
                 app_state->is_running = false;
                 break;
-            }
-
-            if (app_state->mesh_count > 0) {
-                // Perform a small rotation on the first mesh.
-                quat rotation = quat_from_axis_angle((vec3){0, 1, 0}, 0.5f * delta, false);
-                transform_rotate(&app_state->meshes[0].transform, rotation);
-
-                // Perform a similar rotation on the second mesh, if it exists.
-                if (app_state->mesh_count > 1) {
-                    transform_rotate(&app_state->meshes[1].transform, rotation);
-                }
-
-                // Perform a similar rotation on the third mesh, if it exists.
-                if (app_state->mesh_count > 2) {
-                    transform_rotate(&app_state->meshes[2].transform, rotation);
-                }
             }
 
             // TODO: refactor packet creation
