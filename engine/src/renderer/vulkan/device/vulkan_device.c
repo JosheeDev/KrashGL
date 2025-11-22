@@ -296,6 +296,20 @@ b8 select_physical_device(vulkan_context* context) {
         KFATAL("No devices which support Vulkan were found.");
         return false;
     }
+
+    // TODO: These requirements should probably be driven by engine
+    // configuration.
+    vulkan_physical_device_requirements requirements = {};
+    requirements.graphics = true;
+    requirements.present = true;
+    requirements.transfer = true;
+    // NOTE: Enable this if compute will be required.
+    // requirements.compute = true;
+    requirements.sampler_anisotropy = true;
+    requirements.discrete_gpu = false;
+    requirements.device_extension_names = darray_create(const char*);
+    darray_push(requirements.device_extension_names, &VK_KHR_SWAPCHAIN_EXTENSION_NAME);
+
     const u32 max_device_count = 32;
     VkPhysicalDevice physical_devices[max_device_count];
     VK_CHECK(vkEnumeratePhysicalDevices(context->instance, &physical_device_count, physical_devices));
@@ -322,19 +336,6 @@ b8 select_physical_device(vulkan_context* context) {
                 break;
             }
         }
-
-        // TODO: These requirements should probably be driven by engine
-        // configuration.
-        vulkan_physical_device_requirements requirements = {};
-        requirements.graphics = true;
-        requirements.present = true;
-        requirements.transfer = true;
-        // NOTE: Enable this if compute will be required.
-        // requirements.compute = true;
-        requirements.sampler_anisotropy = true;
-        requirements.discrete_gpu = false;
-        requirements.device_extension_names = darray_create(const char*);
-        darray_push(requirements.device_extension_names, &VK_KHR_SWAPCHAIN_EXTENSION_NAME);
 
         vulkan_physical_device_queue_family_info queue_info = {};
         b8 result = physical_device_meets_requirements(
@@ -405,6 +406,9 @@ b8 select_physical_device(vulkan_context* context) {
             break;
         }
     }
+
+    // Clean up requirements.
+    darray_destroy(requirements.device_extension_names);
 
     // Ensure a device was selected
     if (!context->device.physical_device) {
