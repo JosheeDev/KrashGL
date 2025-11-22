@@ -141,7 +141,10 @@
         "renderer_view_skybox.h": "c",
         "mesh_loader.h": "c",
         "stdlib.h": "c",
-        "kthread.h": "c"
+        "kthread.h": "c",
+        "ring_queue.h": "c",
+        "kmutex.h": "c",
+        "job_system.h": "c"
     },
     // File copyright documentation tag.  Array of strings will be converted to one line per element.  Can template {year}.
     "doxdocgen.file.copyrightTag": [

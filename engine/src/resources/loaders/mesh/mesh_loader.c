@@ -291,6 +291,7 @@ b8 import_obj_file(file_handle* obj_file, const char* out_ksm_filename, geometry
     char material_file_name[512] = "";
 
     char name[512];
+    kzero_memory(name, sizeof(char) * 512);
     u8 current_mat_name_count = 0;
     char material_names[32][64];
 
@@ -502,6 +503,7 @@ b8 import_obj_file(file_handle* obj_file, const char* out_ksm_filename, geometry
     if (string_length(material_file_name) > 0) {
         // Load up the material file
         char full_mtl_path[512];
+        kzero_memory(full_mtl_path, sizeof(char) * 512);
         string_directory_from_path(full_mtl_path, out_ksm_filename);
         string_append_string(full_mtl_path, full_mtl_path, material_file_name);
 
