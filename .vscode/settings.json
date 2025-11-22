@@ -144,7 +144,8 @@
         "kthread.h": "c",
         "ring_queue.h": "c",
         "kmutex.h": "c",
-        "job_system.h": "c"
+        "job_system.h": "c",
+        "mesh.h": "c"
     },
     // File copyright documentation tag.  Array of strings will be converted to one line per element.  Can template {year}.
     "doxdocgen.file.copyrightTag": [

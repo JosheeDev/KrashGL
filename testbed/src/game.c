@@ -98,6 +98,13 @@ b8 game_update(game* game_inst, f32 delta_time) {
     }
 
     // RENDERER DEBUG FUNCTIONS
+    // TODO: temp
+    // Bind a key to load up some data.
+    if (input_is_key_up('L') && input_was_key_down('L')) {
+        event_context context = {};
+        event_fire(EVENT_CODE_DEBUG1, game_inst, context);
+    }
+
     if (input_is_key_up('1') && input_was_key_down('1')) {
         event_context data = {};
         data.data.i32[0] = RENDERER_VIEW_MODE_DEFAULT;
